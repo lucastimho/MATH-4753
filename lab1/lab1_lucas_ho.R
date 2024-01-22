@@ -17,8 +17,7 @@ names(ddt)
 #How many quantitative variables are in DDT?
 4
 
-sp = with(ddt, table(SPECIES))
-sp
+with(ddt, table(SPECIES))
 
 #How many species are in the ddt data set?
 3
