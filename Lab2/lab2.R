@@ -17,7 +17,7 @@ mpg.df=myread("EPAGAS.csv")
 
 I.df = myread("IRONORE.csv")
 
-#Put the IRONORE vatriable into vector I
+#Put the IRONORE variable into vector I
 I=I.df$IRON
 
 #Standardize(transform) into z values
