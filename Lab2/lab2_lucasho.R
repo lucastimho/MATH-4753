@@ -25,3 +25,11 @@ library(lattice)
 dotplot(z, col=mycol)
 
 ## TASK 4
+library(ggplot2)
+p <- ggplot(data = mpg.df, aes(y=MPG)) + geom_boxplot(width = 0.1, notch=TRUE) + xlim(-0.4, 0.4) + ggtitle("MPG of 100 Vehicles")
+
+p + coord_flip()
+
+length(z[abs(z)<=2]) > length(mpg) * 3 / 4
+
+length(z[abs(z)<=2]) > length(mpg) * 0.95
