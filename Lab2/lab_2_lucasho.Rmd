@@ -1,0 +1,76 @@
+---
+title: "Lab 2"
+author: "Lucas Ho"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Task 1
+
+```{r}
+getwd()
+```
+
+
+## Task 2
+```{r}
+head(read.csv("EPAGAS.csv"))
+```
+
+## Task 3
+```{r}
+mpg.df = read.csv("EPAGAS.csv")
+
+mpg = mpg.df$MPG
+
+mpg
+
+# The average is approximately zero and the standard deviation is 1 which verifies the transformation
+z = (mpg - mean(mpg)) / sd(mpg)
+mean(z)
+sd(z) ^ 2
+
+# Possible outliers
+z[abs(z)>=2 & abs(z)<=3]
+
+# Outliers
+z[abs(z)>3]
+
+mycol = ifelse(abs(z)>3, "Red", ifelse(abs(z)>=2 & abs(z)<=3, "Blue", "Black"))
+
+library(lattice)
+dotplot(z, col=mycol)
+```
+
+## Task 4
+```{r}
+library(ggplot2)
+p <- ggplot(data = mpg.df, aes(y=MPG)) + geom_boxplot(width = 0.1, notch=TRUE) + xlim(-0.4, 0.4) + ggtitle("MPG of 100 Vehicles")
+
+p + coord_flip()
+
+# Using Chebyshev’s theorem predict the proportion of data within 2 standard deviations of the mean of the mpg data.
+cheb <- length(mpg) * (1 - (1/ (2^2)))
+
+# Use R to calculate the exact proportion within 2 standard deviation of the mean.
+sd2 <- length(z[abs(z)<=2])
+
+# Does Chebyshev agree with the data?
+sd2 > cheb
+
+# Now use the empirical rule, what proportion (according to the rule) of the data should be within 2 standard deviations of the mean
+emp <- length(mpg) * 0.95
+
+# How well does it correspond?
+length(z[abs(z)<=2]) > emp
+
+# Is the Empirical rule valid in this case? Why?
+## Yes because the proportion of data within 2 standard deviations is approximate to the empirical rule
+```
