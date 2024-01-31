@@ -14,11 +14,10 @@ head(ddt)
 # z
 # L[abs(z)>3]
 
-df1 <- ddt %>% filter(LENGTH > 30 & DDT < 1000)
-df1
+ddt %>% filter(SPECIES == "SMBUFFALO") %>% summarise(mean = mean(WEIGHT), n=n())
 
-ddt %>% select(c(SPECIES, RIVER)) %>% table() %>% addmargins()
+ddt %>% filter(SPECIES=="CCATFISH" & DDT > 33) %>% summarise(mean=mean(LENGTH), n=n())
 
-ddt %>% summarise(mean = mean(LENGTH))
+ddt %>% filter(SPECIES=="LMBASS" | SPECIES=="SMBUFFALO") %>% summarise(sd=sd(DDT), n=n())
 
-ddt %>% group_by(SPECIES) %>% summarise (mean = mean(WEIGHT), n = n())
+ddt %>% filter(LENGTH > 40 & WEIGHT > 1000) %>% summarise(n=n())
