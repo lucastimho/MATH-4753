@@ -1,0 +1,107 @@
+---
+title: "Lab 3"
+author: "Lucas Ho"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Task 1
+```{r}
+getwd()
+```
+
+# Task 2
+```{r}
+spruce.df <- read.csv("SPRUCE.csv")
+
+head(spruce.df)
+```
+
+# Task 3
+```{r}
+layout(matrix(1:4,nr=2,nc=2,byrow=TRUE))
+with(spruce.df, plot(Height~BHDiameter, bg="Blue",pch=21, cex=1.2, xlim=(c(0, 1.1*max(BHDiameter))), ylim=(c(0, 1.1*max(Height)))))
+
+library(s20x)
+
+trendscatter(Height~BHDiameter,f=0.5,data=spruce.df)
+
+trendscatter(Height~BHDiameter,f=0.6,data=spruce.df)
+
+trendscatter(Height~BHDiameter,f=0.7,data=spruce.df)
+
+spruce.lm=with(spruce.df, lm(Height~BHDiameter))
+
+abline(spruce.lm)
+
+## Does there appear to be a straight line relationship? No, a nonlinear curve would better represent this relationship
+
+## Comment on the graph, is a straight line appropriate? Consider the smoother curve also. The plot appears nonlinear, increasing, and moderate relation
+```
+
+# Task 4
+```{r}
+layout(matrix(1:4,nr=2,nc=2,byrow=TRUE))
+layout.show(4)
+
+with(spruce.df, plot(Height~BHDiameter, bg="Blue",pch=21, cex=1.2, xlim=(c(0, 1.1*max(BHDiameter))), ylim=(c(0, 1.1*max(Height)))))
+abline(spruce.lm)
+
+with(spruce.df, plot(Height~BHDiameter, bg="Blue",pch=21, cex=1.2, xlim=(c(0, 1.1*max(BHDiameter))), ylim=(c(0, 1.1*max(Height)))))
+yhat=fitted(spruce.lm)
+with(spruce.df, segments(BHDiameter,Height, BHDiameter, yhat))
+abline(spruce.lm)
+
+with(spruce.df, plot(Height~BHDiameter, bg="Blue",pch=21, cex=1.2, xlim=(c(0, 1.1*max(BHDiameter))), ylim=(c(0, 1.1*max(Height)))))
+with(spruce.df, abline(h=mean(Height)))
+abline(spruce.lm)
+with(spruce.df, segments(BHDiameter,mean(Height),BHDiameter,yhat,col="Red"))
+
+with(spruce.df, plot(Height~BHDiameter, bg="Blue",pch=21, cex=1.2, xlim=(c(0, 1.1*max(BHDiameter))), ylim=(c(0, 1.1*max(Height)))))
+with(spruce.df, abline(h=mean(Height)))
+with(spruce.df, segments(BHDiameter,Height,BHDiameter,mean(Height),col="Green"))
+
+TSS=with(spruce.df,sum((Height-mean(Height))^2))
+MSS=with(spruce.df, sum((yhat-mean(Height))^2))
+RSS=with(spruce.df, sum((Height-yhat)^2))
+
+TSS
+MSS
+RSS
+
+## Calculate MSS/TSS, and interpret it. Approximately 0.6569 of the data is accounted for in the model
+MSS/TSS
+
+## Does TSS=MSS+RSS? Yes
+
+TSS
+MSS+RSS
+```
+
+# Task 5
+```{r}
+summary(spruce.lm)
+
+## What is the value of the slope? 0.4815
+
+## What is the value of the intercept? 9.1468
+
+## Write down the equation of the fitted line Height = 0.4815 * BHDiameter + 9.1468
+
+predict(spruce.lm, data.frame(BHDiameter=c(15,18,20)))
+```
+
+# Task 6
+```{r}
+library(ggplot2)
+g=ggplot(spruce.df, aes(y=Height, x=BHDiameter,colour=BHDiameter))
+g=g+geom_point()+geom_line()+geom_smooth(method="lm")
+g+ggtitle("Height vs BHDiameter")
+```

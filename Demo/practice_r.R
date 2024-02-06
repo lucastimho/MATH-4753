@@ -14,10 +14,31 @@ head(ddt)
 # z
 # L[abs(z)>3]
 
-ddt %>% filter(SPECIES == "SMBUFFALO") %>% summarise(mean = mean(WEIGHT), n=n())
+# ddt %>% filter(SPECIES == "SMBUFFALO") %>% summarise(mean = mean(WEIGHT), n=n())
+# 
+# ddt %>% filter(SPECIES=="CCATFISH" & DDT > 33) %>% summarise(mean=mean(LENGTH), n=n())
+# 
+# ddt %>% filter(SPECIES=="LMBASS" | SPECIES=="SMBUFFALO") %>% summarise(sd=sd(DDT), n=n())
+# 
+# ddt %>% filter(LENGTH > 40 & WEIGHT > 1000) %>% summarise(n=n())
+# 
+# ddt %>% filter(SPECIES == "LMBASS" & WEIGHT > 1200) %>% summarize( n = n())
+# 
+# ddt %>% filter(SPECIES == "LMBASS" & RIVER == "TRM") %>% summarize( n = n())
+# 
+# ddt %>% filter(SPECIES == "SMBUFFALO") %>% summarize(mean=mean(WEIGHT), n = n())
+# 
+# ddt %>% filter(RIVER == "TRM") %>% summarize(meansq=mean(LENGTH^2), n = n())
 
-ddt %>% filter(SPECIES=="CCATFISH" & DDT > 33) %>% summarise(mean=mean(LENGTH), n=n())
+mean(ddt$LENGTH)
 
-ddt %>% filter(SPECIES=="LMBASS" | SPECIES=="SMBUFFALO") %>% summarise(sd=sd(DDT), n=n())
+sd(ddt$WEIGHT)
 
-ddt %>% filter(LENGTH > 40 & WEIGHT > 1000) %>% summarise(n=n())
+with(ddt, table(SPECIES > 50))
+
+ddt %>% filter(LENGTH > 50) %>% summarize(n=n())
+
+ddt %>% filter(LENGTH > 50 & SPECIES == "SMBUFFALO") %>% summarize(n=n())
+
+v <- Intro2R::myreadxl()
+
