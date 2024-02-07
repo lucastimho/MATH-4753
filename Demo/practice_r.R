@@ -40,5 +40,3 @@ ddt %>% filter(LENGTH > 50) %>% summarize(n=n())
 
 ddt %>% filter(LENGTH > 50 & SPECIES == "SMBUFFALO") %>% summarize(n=n())
 
-v <- Intro2R::myreadxl()
-
