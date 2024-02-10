@@ -1,0 +1,157 @@
+---
+title: "Lab 4"
+author: "Lucas Ho"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Task 1
+```{r}
+getwd()
+```
+
+# Task 2
+```{r}
+spruce.df <- read.csv("SPRUCE.csv")
+
+## Last six lines of the data
+tail(spruce.df)
+```
+
+# Task 3
+```{r}
+library(s20x)
+
+trendscatter(Height~BHDiameter,f=0.5,data=spruce.df)
+
+spruce.lm=with(spruce.df, lm(Height~BHDiameter))
+
+height.res=residuals(spruce.lm)
+
+height.fit=fitted(spruce.lm)
+
+plot(height.fit, height.res)
+
+trendscatter(height.fit, height.res)
+
+## What shape is seen in the plot? the shape appears somewhat logarithmic
+
+plot(spruce.lm, which=1)
+
+normcheck(spruce.lm,shapiro.wilk=TRUE)
+
+## What is the pvalue for the Shipiro-Wilk test? What is the NULL hypothesis in this case? 0.29, the null hypothesis is how well the residuals can be modeled by a normal distribution
+
+## There is some validity to applying a straight line to the data set as the pvalue is not statistically significant to reject the null hypothesis
+```
+
+# Task 4
+```{r}
+quad.lm=lm(Height~BHDiameter+I(BHDiameter^2),data=spruce.df)
+
+add1(spruce.lm,.~.+I(BHDiameter^2))
+
+plot(Height~BHDiameter,bg="Blue",pch=21,cex=1.2,ylim=c(0,max(Height)),xlim=c(0,max(BHDiameter)),main="Spruce Height Predictions",data=spruce.df)
+
+quad.fit=fitted(quad.lm)
+
+quad.res=residuals(quad.lm)
+
+plot(quad.fit, quad.res)
+
+normcheck(quad.lm,shapiro.wilk = TRUE)
+
+## What is the value of the p-value in the Shapiro-Wilk test? What do you conclude? 0.684, the p-value for a quadratic fit suggests a better indication of fit than a straight line model
+```
+
+# Task 5
+```{r}
+summary(quad.lm)
+
+## What is the value of 𝛽0? 0.8609
+
+## What is the value of 𝛽1? 1.470
+
+## What is the value of 𝛽2? -0.0275
+
+## 𝛽0 interval estimate: [-3.5491, 5.2709]
+
+## 𝛽1 interval estimate: [0.9824, 1.9676]
+
+## 𝛽2 interval estimate: [-0.0407, -0.0143]
+
+## 0.8609 + 1.4670 * BHDiameter - 0.0275 * BHDiameter^2
+
+predict(quad.lm, data.frame(BHDiameter=c(15,18,20)))
+
+## What is the value of multiple R2? 0.7741
+
+## Quadratic model is better as the R2 value is higher
+
+summary(spruce.lm)
+
+## What does multiple R2 mean in this case? Correlation coefficient between Height, BHDiameter and other hidden variables
+
+anova(spruce.lm)
+anova(quad.lm)
+
+## Anova shows more variance between the Height and BHDiameter for the quadratic model than the linear model
+
+TSS=with(spruce.df, sum((Height-mean(Height))^2))
+
+MSS=with(spruce.df, sum((height.fit-mean(Height))^2))
+
+RSS=with(spruce.df, sum((Height-height.fit)^2))
+
+TSS
+MSS
+RSS
+MSS/TSS
+```
+
+# Task 6
+```{r}
+cooks20x(quad.lm)
+
+## Cook's distance measure the effect of deleting a given observation. Observations with a large Cook's distance require closer analysis.
+
+quad2.lm=lm(Height~BHDiameter+I(BHDiameter^2), data=spruce.df[-24,])
+
+summary(quad2.lm)
+summary(quad.lm)
+
+## Removal of the 24th observation shows that the R2 value grows larger for quad2 than without removing it in quad
+
+## This suggests that observation 24 may be a possible outlier
+```
+
+# Task 7
+```{r}
+sp2.df=within(spruce.df, X <- (BHDiameter-18) * (BHDiameter > 18))
+
+lmp = lm(Height~BHDiameter + X, data= sp2.df)
+tmp = summary(lmp)
+names(tmp)
+
+plot(spruce.df, main="Piecewise Regression")
+
+myf = function(x,coef){
+  coef[1]+coef[2]*(x) + coef[3]*(x-18)*(x-18>0)
+}
+
+myf(0, coef=tmp$coefficients[,"Estimate"])
+curve(myf(x,coef=tmp$coefficients[,"Estimate"] ),add=TRUE, lwd=2,col="Blue")
+abline(v=18)
+```
+
+# Task 8
+```{r}
+MATH4753LHO24::myquad(10)
+```

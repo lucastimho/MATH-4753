@@ -40,3 +40,10 @@ ddt %>% filter(LENGTH > 50) %>% summarize(n=n())
 
 ddt %>% filter(LENGTH > 50 & SPECIES == "SMBUFFALO") %>% summarize(n=n())
 
+v <- read.csv("SEEDLING.csv")
+
+tt <- table(v$Abundance, v$Type)
+
+addt <- addmargins(tt)
+
+addt
