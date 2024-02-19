@@ -47,3 +47,11 @@ tt <- table(v$Abundance, v$Type)
 addt <- addmargins(tt)
 
 addt
+
+with(ddt, table(RIVER)) -> tab
+
+barplot(tab)
+
+with(ddt, hist(LENGTH))
+
+mean(ddt$WEIGHT)
