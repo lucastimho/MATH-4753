@@ -1,0 +1,154 @@
+# Q1
+assignments <- c("In-class quizzes", "Laboratories", "Chapter Quizzes", "Project 1", "Project 2", "Exam 1", "Exam 2", "Assignments", "Final Exam")
+weight <- c(0.1, 0.1, 0.05, 0.0333, 0.0667, 0.1, 0.1, 0.15, 0.3)
+
+grade.df <- data.frame(Assignments=assignments, Weight=weight)
+
+print(grade.df)
+
+# Q2
+ddt <- read.csv("DDT.csv")
+
+ddt$MILE <- as.factor(ddt$MILE)
+
+coplot(WEIGHT~LENGTH | RIVER*SPECIES, data=ddt, col="Blue", pch=1.2, xlab="Length", ylab="Weight", )
+
+# Each plot represents the length and width of the fish given both the river and species
+
+# This creates a numeric vector where each element corresponds to the numeric representation of the levels in MILE
+
+# This returns the number of unique values from m
+
+# There are no observations from the the two corresponding variables
+
+ddt[ddt$RIVER=="FCM" & ddt$SPECIES=="CCATFISH",]
+
+# Q3
+# Quantitative
+# Quantitative
+# Qualitative
+# Quantitative
+# Qualitative
+# Quantitative
+# Qualitative
+
+# Q4
+# Simple, stratified, cluster, and systematic random sampling
+# Simple random sampling ensures that every subset of fixed size in the population has the same chance of being included in the sample
+# Stratified random sampling is typical used when the experimental units associated with the population can be separated into two or more groups of units where the characteristics of the units are more similar within the units than across the units
+# Cluster random sampling is used to sample natural groupings of experimental units first, then collect data from all experimental units within each cluster.
+# Systematic random sampling involves systematically selecting every kth experimental unit from list of all experimental units
+
+# Q5
+mtbe <- read.csv("MTBE.csv")
+
+ind=sample(1:223,5,replace=FALSE)
+
+mtbe[ind,]
+
+mtbeo = na.omit(mtbe)
+
+depth = mtbeo[mtbeo$Aquifier=="Bedrock",]$Depth
+
+sd(depth)
+
+# Q6
+eq <- read.csv("EARTHQUAKE.csv")
+
+v=sample(1:2929,30,replace=FALSE)
+
+eq[v,]
+
+plot(ts(eq$MAG))
+
+median(eq$MAGNITUDE)
+
+# Q7
+# Stratified random sampling
+# Fish in the Tennessee River
+# Capture location and species
+
+# Q8
+# Bar plot
+# Number of robots
+# Legs ONLY
+none =  round(15/106, 4)
+both = round(8/106, 4)
+lego = round(63/106, 4)
+wheelo = round(20/106, 4)
+pareto <- function(x, mn = "Pareto barplot") {  # x is a vector
+  x.tab = table(x)
+  xx.tab = sort(x.tab, decreasing = TRUE, index.return = FALSE)
+  cumsum(as.vector(xx.tab)) -> cs
+  length(x.tab) -> lenx
+  bp <- barplot(xx.tab, ylim = c(0,max(cs)),las = 2)
+  lb <- seq(0,cs[lenx], l = 11)
+  axis(side = 4, at = lb, labels = paste(seq(0, 100, length = 11), "%", sep = ""), las = 1, line = -1, col = "Blue", col.axis = "Red")
+  for(i in 1:(lenx-1)){
+    segments(bp[i], cs[i], bp[i+1], cs[i+1], col = i, lwd = 2)
+  }
+  title(main = mn)
+}
+pareto(c(none, both, lego, wheelo))
+
+# Q9
+microcategory <- c("Denial of service", "Information disclosure", "Remote code execution", "Spoofing", "Privilege elevation")
+microvalues <- c(6, 8, 22, 3, 11)
+pie(microvalues, labels = microcategory)
+
+pareto(microvalues)
+
+# Q10
+library(plotrix)
+swd <- read.csv("SWDEFECTS.csv")
+tab = table(swd$defect)
+rtab = tab/sum(tab)
+round(rtab,2)
+pie3D(rtab, labels=list("OK", "Defective"), main="pie plot of SWD")
+
+# Q 11
+
+# Q 12
+roughpipe = read.csv("ROUGHPIPE.csv")
+rpint=c(mean(roughpipe) - (2 * sd(roughpipe)), mean(roughpipe) + (2 * sd(roughpipe)))
+
+# Q 13
+gants <- read.csv("GOBIANTS.csv")
+mean(gants$AntSpecies)
+median(gants$AntSpecies)
+getmode <- function(v) {
+  uniqv <- unique(v)
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+getmode(gants$AntSpecies)
+
+# Median as this is not skewed by outliers
+
+mean(gants[gants$Region=="Dry Steppe",]$PlantCov)
+median(gants[gants$Region=="Dry Steppe",]$PlantCov)
+getmode(gants[gants$Region=="Dry Steppe",]$PlantCov)
+
+mean(gants[gants$Region=="Gobi Desert",]$PlantCov)
+median(gants[gants$Region=="Gobi Desert",]$PlantCov)
+getmode(gants[gants$Region=="Gobi Desert",]$PlantCov)
+
+# Yes the center of the total plant cover percentage distribution appear to be different
+
+# Q 14
+glx <- read.csv("GALAXY2.csv")
+glx.df <- rnorm(51, mean = mean(glx$VELOCITY), sd = sd(glx$VELOCITY))
+hist(glx.df)
+
+# No evidence as this appears to be a uni modal distribution
+
+mean(glx$VELOCITY)
+median(glx$VELOCITY)
+getmode(glx$VELOCITY)
+sd(glx$VELOCITY)
+
+# A1775A because the value is more closer the median
+
+# Q 15
+library(ggplot2)
+
+ggplot(data = ddt, aes(x = RIVER, y = LENGTH, fill=SPECIES)) + geom_boxplot() + ggtitle("Lucas Ho")
