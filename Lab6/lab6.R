@@ -19,7 +19,7 @@ curve(dnorm(x, mean=10,sd=4),xlim=c(-10,30))
 # x values corresponding to the x - cords of points on the curve
 xcurve=seq(10,25,length=1000)
 
-# Y values corresponding t0 the x values
+# Y values corresponding to the x values
 ycurve=dnorm(xcurve,mean=10,sd=4)
 
 # Fill in the polygon with the given vertices
