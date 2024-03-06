@@ -166,3 +166,6 @@ ycurve=dbeta(xcurve, shape1=2, shape2=4)
 polygon(c(0, xcurve, 0.25),c(0,ycurve,0), col="Red")
 prob = round(pbeta(0.25, shape1=2, shape2=4) - pbeta(0, shape1=2,shape2=4), 4)
 print(prob)
+
+# Task 7
+MATH4753LHO24::myncurve(0.27)

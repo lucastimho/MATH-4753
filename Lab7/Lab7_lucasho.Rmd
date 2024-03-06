@@ -1,7 +1,24 @@
+---
+title: "Lab 7"
+author: "Lucas Ho"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Task 1
+```{r}
 getwd()
+```
 
 # Task 2
+```{r}
 mychisim <- function(n1=10,sigma1=4,mean1=10,iter=1000,ymax=0.1,...){    # adjust ymax to make graph fit
   y1=rnorm(n1*iter,mean=mean1,sd=sigma1) # generate iter samples of size n1
   
@@ -31,8 +48,10 @@ par(mfrow=c(1,1))
 
 chisq <- mychisim(iter=1500, mean1=20, sigma1=10)
 hist(chisq$w)
+```
 
 # Task 3
+```{r}
 myTsim <- function(n1=10,sigma1=4,mean1=10,iter=1000,ymax=0.5,...){    # adjust ymax to make graph fit
   y1=rnorm(n1*iter,mean=mean1,sd=sigma1)# generate iter samples of size n1
   
@@ -63,8 +82,10 @@ par(mfrow=c(1,1))
 
 T <- myTsim(iter=1500, mean1=20, sigma1=10)
 hist(T$w)
+```
 
 # Task 4
+```{r}
 mychisim2<-function(n1=10,n2=10,sigma1=4,sigma2=4,mean1=5,mean2=10,iter=1000,ymax=0.07,...){    # adjust ymax to make graph fit
   y1=rnorm(n1*iter,mean=mean1,sd=sigma1)# generate iter samples of size n1
   y2=rnorm(n2*iter,mean=mean2,sd=sigma2)
@@ -94,8 +115,10 @@ par(mfrow=c(1,1))
 
 chi2sam <- mychisim2(n1=10,n2=14,sigma1=3,sigma2=3,mean1=5,mean2=10,iter=1000,ymax=0.07)
 hist(chi2sam$w)
+```
 
 # Task 5
+```{r}
 myTsim2 <- function(n1=10,n2=14,sigma1=3,sigma2=3,mean1=5,mean2=10,iter=1000,ymax=0.5,...){
   y1=rnorm(n1*iter,mean=mean1,sd=sigma1)# generate iter samples of size n1
   y2=rnorm(n2*iter,mean=mean2,sd=sigma2)
@@ -127,8 +150,10 @@ par(mfrow=c(1,1))
 
 t2sam <- myTsim(iter=10000)
 hist(t2sam$w)
+```
 
 # Task 6
+```{r}
 myFsim2<-function(n1=10,n2=14,sigma1=3,sigma2=2,mean1=5,mean2=10,iter=1000,ymax=0.9,...){
   y1=rnorm(n1*iter,mean=mean1,sd=sigma1)# generate iter samples of size n1
   y2=rnorm(n2*iter,mean=mean2,sd=sigma2)
@@ -160,5 +185,4 @@ par(mfrow=c(1,1))
 
 fsim <- myFsim2(iter=10000)
 hist(fsim$w)
-
-# Task 7
+```

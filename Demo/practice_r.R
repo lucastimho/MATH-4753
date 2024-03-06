@@ -55,3 +55,33 @@ barplot(tab)
 with(ddt, hist(LENGTH))
 
 mean(ddt$WEIGHT)
+
+?dbinom()
+
+1 - pbinom(q=10,size=20,prob=0.7)
+
+pbinom(q=9,size=20,prob=0.7)
+
+dbinom(x=17,size=20,prob=0.7)
+
+library(s20x)
+data("course.df")
+course.df
+
+tt <- table(course.df$Gender, course.df$Degree)
+
+addt <- addmargins(tt)
+
+addt
+
+1 - pbinom(6, 10, 0.6)
+
+pnorm(8, 10, 5)
+
+1 - pnorm(0, -4, 10)
+
+dbinom(11, 20, 0.4) + dbinom(10, 20, 0.4) + dbinom(9, 20, 0.4) + dbinom(8, 20, 0.4) + dbinom(7, 20, 0.4) + dbinom(6, 20, 0.4) + dbinom(5, 20, 0.4) + dbinom(4, 20, 0.4) + dbinom(3, 20, 0.4)
+
+pnorm(16, 15, 3) - pnorm(10, 15, 3)
+
+pbinom(11, 20, 0.4) - pbinom(2, 20, 0.4)
