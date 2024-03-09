@@ -186,3 +186,10 @@ par(mfrow=c(1,1))
 fsim <- myFsim2(iter=10000)
 hist(fsim$w)
 ```
+
+# Task 7
+```{r}
+library(MATH4753LHO24)
+data("fire")
+knitr::kable(head(fire))
+```

@@ -1,0 +1,377 @@
+---
+title: 'Assignment 2'
+author: "Lucas Ho"
+date: '`r format(Sys.Date(),format="%A, %B %d, %Y")`'
+output: 
+  html_document:
+    df_print: paged
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE, fig.align='center'}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+17/17
+
+# Questions{}
+
+## Q 1
+a.
+\[
+1 - P(Expert | Match) = 7.88\%\
+\]
+b.
+\[
+1 - P(Novice|Match) = 25.45\%\
+\]
+c.
+\[
+novice
+\]
+
+## Q 2
+a.
+\[
+P(positive|user) = \frac{50}{100} = 0.5
+\]
+b.
+\[
+P(negaive|nonuser) = \frac{1000-100-9}{1000-100} = \frac{891}{900} = 0.99
+\]
+c.
+\[
+P(user|positive) = \frac{P(positive|user)P(user)}{P(positive)} = \frac{0.5*0.1}{0.059} = 0.8475
+\]
+
+## Q 3
+Using decision trees, this theroem can be proven by showing that multiplying each value to the previous will result in the same answer as counting the number of results on the decision tree.
+
+## Q 4
+Consider a set of n distinct objects. To find the number of permutations of r objects taken from this set, we can break down the process into r steps:
+
+1. Choosing the first object: There are n options for the first object.
+
+2. Choosing the second object: After choosing the first object, there are (n−1) options left for the second object.
+
+3. Choosing the second object: After choosing the first object, there are (n−2) options left for the second object.
+
+...
+
+r. Choosing the rth object: After choosing the first object, there are (n−(r-1)) options left for the rth object.
+
+The total number of permutations is the product of the number of options at each step:
+
+\[
+P(n,r)=n*(n-1)*(n-2)*\dots *(n-(r-1))
+\]
+
+when expressed as a factorial:
+
+\[
+P(n,r) = \frac{n!}{(n-r)!}
+\]
+
+
+## Q 5
+Consider a set of n distinct objects that you want to partition into r distinct groups
+
+1. Choose the first object's group: There are r options for placing the first object into one of the r groups.
+
+2. Choose the second object's group: Similarly, there are r options for placing the second object into one of the r groups, independently of the first choice.
+
+3. Continue for all n objects: For each of the n objects, there are r options for placing it into one of the r groups.
+
+The total number of ways to make these choices is the product of the number of options at each step:
+
+\[
+P(n;r) = r * r*r*\dots * r
+\]
+
+\[
+P(n;r) = r!
+\]
+
+## Q 6
+Consider a set of n distinct objects that you want to choose r elements from
+
+1. Choosing the first object: There are n options for the first object.
+
+2. Choosing the second object: After choosing the first object, there are (n−1) options left for the second object.
+
+3. Choosing the second object: After choosing the first object, there are (n−2) options left for the second object.
+
+...
+
+r. Choosing the rth object: After choosing the first object, there are (n−(r-1)) options left for the rth object.
+
+The total number of ways to make these choices is the product of the number of options at each step:
+
+\[
+C(n,r)=n*(n-1)*(n-2)*(n-3)*\dots * (n-(r-1))
+\]
+
+when expressed as a factorial:
+
+\[
+C(n,r) = \frac{n!}{r!*(n-r)!}
+\]
+
+## Q 7
+a.
+\[
+P(Y=0)+P(Y=1)+P(Y=2)+P(Y=3)+P(Y=4)
+\]
+```{r}
+print(0.09+0.3+0.37+0.2+0.04)
+```
+b.
+\[
+P(Y=3)+P(Y=4)
+\]
+```{r}
+print(0.3+0.04)
+```
+c.
+\[
+P(Y=0)+P(Y=1)
+\]
+```{r}
+print(0.09+0.3)
+```
+
+## Q 8
+a.
+All probabilities are between 0 and 1, are inclusive, the total probablities equal 1.
+```{r}
+print(0.17+0.1+0.11+0.11+0.1+0.1+0.07+0.05+0.03+0.02+0.02+0.02+0.02+0.02+0.01+0.01+0.01+0.01+0.01+0.005+0.005)
+```
+
+b.
+```{r}
+print(0.02+0.02+0.02+0.02+0.01+0.01+0.01+0.01+0.01+0.005+0.005)
+```
+
+c.
+```{r}
+mean = 0.17*0+0.1*1+0.11*2+0.11*3+0.1*4+0.1*5+0.07*6+0.05*7+0.03*8+0.02*9+0.02*10+0.02*11+0.02*12+0.02*13+0.01*14+0.01*15+0.01*16+0.01*17+0.01*18+0.005*19+0.005*20
+print(mean)
+
+sd = sqrt(0.17*(0-mean)^2+0.1*(1-mean)^2+0.11*(2-mean)^2+0.11*(3-mean)^2+0.1*(4-mean)^2+0.1*(5-mean)^2+0.07*(6-mean)^2+0.05*(7-mean)^2+0.03*(8-mean)^2+0.02*(9-mean)^2+0.02*(10-mean)^2+0.02*(11-mean)^2+0.02*(12-mean)^2+0.02*(13-mean)^2+0.01*(14-mean)^2+0.01*(15-mean)^2+0.01*(16-mean)^2+0.01*(17-mean)^2+0.01*(18-mean)^2+0.005*(19-mean)^2+0.005*(20-mean)^2)
+print(sd)
+```
+
+d.
+```{r}
+intv <- c(mean - 2*sd, mean+2*sd)
+print(intv)
+```
+
+## Q 9
+a.
+```{r}
+dbinom(10, 25, 0.7)
+```
+
+b.
+```{r}
+pbinom(5,25,0.7)
+```
+
+c.
+```{r}
+print(25*0.7)
+
+print(sqrt(25*0.7*0.3))
+```
+
+d.
+The expected value of U.S. graduate students who earn PhD degrees in engineering and are foreign nationals is 17.5 with any differing data deviating from that value on average 2.2913
+
+## Q 10
+\[
+P(X_1=5,X_2=5,X_3=5,X_4=5,X_5=5)
+\]
+```{r}
+dmultinom(c(5,5,5,5,5,5,5,5,5,5), prob=c(0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1))
+```
+
+## Q 11
+a.
+Negative binomial
+
+b.
+```{r}
+dnbinom(x=5,size=8,prob=0.85)
+```
+
+## Q 12
+a.
+\[
+E(X) = \frac{nr}{N}
+\]
+```{r}
+print(10*8/209)
+```
+In a sample of 10 facilities, the expected number of facilities that treat hazardous waste on-site is 0.3828
+
+b.
+```{r}
+dhyper(4,8,201,10)
+```
+
+## Q 13
+a.
+\[
+E(Y)=Var(Y)=0.03
+\]
+```{r}
+print(sqrt(0.03))
+```
+
+b.
+The unit of time between each casualty is both mutually exclusive and independent
+
+c.
+```{r}
+dpois(0,0.03)
+```
+
+## Q 14
+a.
+\[
+\int_{0}^{1} c(2-y) \,dy = 1
+\]
+\[
+c(2-\frac{1}{2})=1
+\]
+\[
+c = \frac{2}{3}
+\]
+
+b.
+\[
+F(y) = 
+  \begin{cases}
+    \frac{2}{3}(2y-\frac{1}{2}y^2) &\text{if } 0 \leq y \leq 1 \\
+    0 & \text{elsewhere}
+  \end{cases}
+\]
+
+c.
+\[
+F(0.4)=\frac{2}{3}(2*0.4-\frac{1}{2}(0.4)^2) = 0
+\]
+
+d.
+\[
+P(0.1\leq Y\leq 0.6) = F(0.6) - F(0.1)
+\]
+\[
+\frac{2}{3}[(2*0.6-\frac{1}{2}(0.6)^2) - (2*0.1 - \frac{1}{2}(0.1)^2)]
+\]
+\[
+\frac{2}{3}[(1.2-0.18)-(0.2-0.005)] = 0.55
+\]
+
+## Q 15
+a.
+\[
+\mu = E(Y) \int_{-5}^{5} \frac{3y}{500}(25-y^2) \,dy
+\]
+\[
+= (\frac{3(5)^2}{40}-\frac{3(5)^2}{2000})-(\frac{3(-5)^2}{40}-\frac{3(-5)^2}{2000}) = 0
+\]
+\[
+\sigma^2=E[(Y-\mu)^2]=E(Y^2)
+\]
+\[
+E(Y^2)=\int_{-5}^{5} \frac{3y^2}{500}(25-y^2) \,dy
+\]
+\[
+= (\frac{5^3}{20}-\frac{3(5)^5}{2500})-(\frac{(-5)^3}{20}-\frac{3(-5)^5}{2500})=5
+\]
+
+b.
+\[
+\frac{1}{60}\mu=\frac{1}{60}(0)=0
+\]
+\[
+(\frac{1}{60})^2\sigma=(\frac{1}{3600})(5) = 0.0014
+\]
+
+c.
+\[
+(60)\mu=(60)(0) = 0
+\]
+\[
+(60)^2\sigma = (3600)(5) = 18000
+\]
+
+## Q 16
+\[
+P(X)\sim\ N(\mu=50,\sigma=3.2)
+\]
+
+a.
+\[
+P(X > 45)
+\]
+```{r}
+round(1 - pnorm(45, 50, 3.2),4)
+```
+
+b.
+\[
+P(X < 55)
+\]
+```{r}
+round(pnorm(55, 50, 3.2),4)
+```
+
+c.
+\[
+P(51 < X < 52)
+\]
+```{r}
+round(pnorm(52, 50, 3.2) - pnorm(51, 50, 3.2),4)
+```
+
+## Q 17
+\[
+P(X) \sim N(\mu=605, \sigma=185)
+\]
+
+a.
+\[
+P(500 < X < 700)
+\]
+```{r}
+round(pnorm(700, 605, 185) - pnorm(500, 605, 185),4)
+```
+
+b.
+\[
+P(400 < X < 500)
+\]
+```{r}
+round(pnorm(500, 605, 185) - pnorm(400, 605, 185),4)
+```
+
+c.
+\[
+P(X > 1000)
+\]
+```{r}
+round(1 - pnorm(1000, 605, 185),4)
+```
+
+d.
+```{r}
+round(qnorm(0.9, 605, 185),4)
+```
