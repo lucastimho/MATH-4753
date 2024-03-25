@@ -56,8 +56,6 @@ with(ddt, hist(LENGTH))
 
 mean(ddt$WEIGHT)
 
-?dbinom()
-
 1 - pbinom(q=10,size=20,prob=0.7)
 
 pbinom(q=9,size=20,prob=0.7)
@@ -85,3 +83,6 @@ dbinom(11, 20, 0.4) + dbinom(10, 20, 0.4) + dbinom(9, 20, 0.4) + dbinom(8, 20, 0
 pnorm(16, 15, 3) - pnorm(10, 15, 3)
 
 pbinom(11, 20, 0.4) - pbinom(2, 20, 0.4)
+
+round((-2*4) + 6, 4)
+
