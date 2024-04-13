@@ -1,7 +1,24 @@
+---
+title: "Lab 10"
+author: "Lucas Ho"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Task 1
+```{r}
 getwd()
+```
 
 # Task 2
+```{r}
 mymaxlik=function(lfun,x,param,...){
   # how many param values are there?
   np=length(param)
@@ -38,10 +55,12 @@ mymaxlik=function(lfun,x,param,...){
 y = c(3, 3, 4, 3, 4, 5, 5, 4)
 logbin=function(x,param) log(dbinom(x,prob=param,size=10))
 mymaxlik(lfun=logbin, x=y, param = seq(0,1, length=1000, main="Binomial, n=20"))
+```
 
 # Task 3
+```{r}
 logpoiss=function(x,param) log(dpois(x,lambda=param))
-mymaxlik(x=c(4,6,7,6,5), param=seq(0,10, length=1000), lfun=logpoiss, xlab=expresssion(lambda), main="Poisson", cex.main = 1)
+mymaxlik(x=c(4,6,7,6,5), param=seq(0,10, length=1000), lfun=logpoiss, xlab="expresssion(lambda)", main="Poisson", cex.main = 1)
 
 myNRML = function(x0, delta=0.001, llik, xrange, parameter="param") {
   f=function(x) (llik(x+delta)-llik(x))/delta
@@ -71,8 +90,10 @@ myNRML = function(x0, delta=0.001, llik, xrange, parameter="param") {
   list(x=x, y=y)
 }
 myNRML(x0=1, delta=0.000001, llik=function(x) log(dpois(4,x)*dpois(6,x)*dpois(7,x)*dpois(6,x)*dpois(5,x)), xrange=c(0,30), parameter="lambda")
+```
 
 # Task 4
+```{r}
 logbin2=function(theta){log(dbinom(1,prob=theta,size=2)) + log(dbinom(7,prob=theta,size=8))}
 mymaxlikg=function(lfun="logbin2",theta) { # default log lik is a combination bin
   nth=length(theta)  # nu. of valuse used in theta
@@ -86,8 +107,10 @@ mymaxlikg=function(lfun="logbin2",theta) { # default log lik is a combination bi
 }
 
 mymaxlikg(theta=seq(0,1,length=10000), lfun=logbin2)
+```
 
 # Task 5
+```{r}
 logbinpois=function(theta1,theta2) log(dbinom(5,size=10,prob=theta1)) + log(dbinom(7,size=8,prob=theta1))+ log(dpois(3,lambda=theta2))
 
 maxlikg2=function(theta1,theta2,lfun="logbinpois",...){
@@ -105,8 +128,10 @@ maxlikg2=function(theta1,theta2,lfun="logbinpois",...){
   list(th1est=th1est,th2est=th2est)
 }
 maxlikg2(theta1=seq(0,1,length=1000),theta2=seq(0,10,length=1000),nlevels=20)
+```
 
 # Task 6
+```{r}
 mymlnorm=function(x,mu,sig,...){  #x sample vector
   nmu=length(mu) # number of values in mu
   nsig=length(sig)
@@ -145,8 +170,10 @@ mymlnorm=function(x,mu,sig,...){  #x sample vector
 }
 
 mymlnorm(x=c(10,12,13,15,12,11,10),mu=seq(10,15,length=1000),sig=seq(0.1,4,length=1000),lwd=2,labcex=1)
+```
 
 # Task 7
+```{r}
 mymlbeta=function(x,alpha,beta,...){  #x sample vector
   na=length(alpha) # number of values in alpha
   nb=length(beta)
@@ -196,4 +223,11 @@ par(mfrow=c(1,1))
 dz=apply(z-c(a,b),1,function(x) sqrt(sum(x^2)))
 plot(dz)
 which(dz>4)
+```
 
+# Task 8
+```{r}
+y = c(3, 3, 4, 3, 4, 5, 5, 4)
+logbin=function(x,param) log(dbinom(x,prob=param,size=10))
+MATH4753LHO24::mymaxlik(lfun=logbin, x=y, param = seq(0,1, length=1000, main="Binomial, n=20"))
+```
