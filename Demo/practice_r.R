@@ -101,3 +101,50 @@ plot(f, -2,5, ylim = 0:1, col = 2)
 optimize(fp, c(-4, 20))   # doesn't see the minimum
 optimize(fp, c(-7, 20))   # ok
 # }
+
+# dbinom(6, 10, 0.5)
+# 
+# dbinom(4, 10, 0.5) + dbinom(5, 10, 0.5) + dbinom(6, 10, 0.5)
+# 
+# 1 - pbinom(6, 10, 0.5)
+# 
+# pbinom(7, 10, 0.5)
+# 
+# pnorm(8, 10, 5) - pnorm(3, 10, 5)
+# 
+# 1 - pnorm(11, 10, 5)
+# 
+# dnorm(2, 10, 5)
+# 
+# pnorm(10, 10, 50)
+# 
+# 1 - pnorm(20,20,6)
+# 
+# pnorm(5, 10, 10)
+# 
+# 1 - pnorm(0.5)
+# 
+# 0.5 - pnorm(10,20,10)
+# 
+# choose(10,8)
+# 
+# 1 - pnorm(12, 10, 5)
+# 
+# pnorm(14, 10, 5) - pnorm(8, 10, 5)
+# 
+# qnorm(0.6, 10, 5)
+# 
+# pbeta(2,4,0.7)
+# 
+# y = c(3, 4, 5)
+# mean(y) - 2 * sd(y)
+
+data <- read.csv("SAFETY.csv")
+data$REAC.R
+t.test(data$REAC.R,data$REAC.U, paired=FALSE)$conf
+
+library(dplyr)
+data %>% mutate(difference = REAC.R-REAC.U) -> data2
+t.test(data2$difference)$conf
+
+t.test(data$REAC.R,data$REAC.U, paired =TRUE)$conf
