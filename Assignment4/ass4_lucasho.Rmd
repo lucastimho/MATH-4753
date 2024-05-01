@@ -1,0 +1,226 @@
+---
+title: "Assignment 4"
+author: "Lucas Ho"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\[
+10/10
+\]
+
+# Question 1
+## Part a
+```{r}
+data <- read.csv("NZBIRDS.csv")
+sam <- sample(nrow(data), 35)
+rand_sam <- data[sam, ]
+rand_sam
+```
+
+## Part b
+```{r}
+t.test(rand_sam$Body.Mass)
+```
+
+\[
+(-38.3708, 13350.3708)
+\]
+
+## Part c
+
+If a 95% confidence interval for a parameter $\theta$ is (-38.3708, 13350.3708), then we are 95% "confident" that $\theta$ falls between -38.3708 and 13350.3708.
+
+## Part d
+
+The mean from the MINITAB, 9113, is within the 95% confidence interval (-38.3708, 13350.3708). 
+
+## Part e
+
+```{r}
+t.test(rand_sam$Egg.Length)
+```
+
+\[
+(46.0380, 74.4191)
+\]
+
+If a 95% confidence interval for a parameter $\theta$ is (46.0380, 74.4191), then we are 95% "confident" that $\theta$ falls between 46.0380 and 74.4191.
+
+# Question 2
+## Part a
+```{r}
+set.seed(10); y1 <- rnorm(100, mean = 1312, sd = 422)
+set.seed(20); y2 <- rnorm(47, mean = 1352, sd = 271)
+t.test(y1, y2, var.equal = FALSE, conf.level = 0.9)
+```
+
+\[
+(-137.9459, 52.4098)
+\]
+
+## Part b
+```{r}
+var.test(y1, y2)
+```
+
+\[
+(1.2608, 2.9122)
+\]
+
+Based off the interval, 1 is not within the 90% confidence interval, which provides evidence that the two populations do not have similar variances.
+
+# Question 3
+
+Pivotal statistic for the normal distribution is $Z = \frac{y}{\sigma}$
+
+Pivotal statistic for the chi-square distribution for 1 degree of freedom is $\chi^2 = (\frac{y}{\sigma})^2$
+
+This shows the relation between the normal distribution and chi-squared distribution for 1 degree of freedom.
+
+# Question 4
+## Part a
+\[
+H_0: \mu = 2, H_a: \mu \neq 2
+\]
+
+## Part b
+```{r}
+y <- read.csv("ROUGHPIPE.csv")
+t.test(y, mu = 2)
+```
+
+\[
+t = -1.0158, p-value = 0.3225
+\]
+
+## Part c
+\[
+<1.636, >2.126
+\]
+
+## Part d
+
+The p-value is 0.3225 which does not provide evidence to reject that the means of the piper differ from 2
+
+## Part e
+
+The rejection region is the values that are not within the confidence interval
+
+# Question 5
+## Part a
+```{r}
+y <- read.csv("WISCLAKES.csv")
+t.test(y$DOC, mu = 15)
+```
+
+## Part b
+```{r}
+theta.null = mean(y$DOC) + qnorm(0.05) * sd(y$DOC)
+theta.alt = 14
+pnorm((theta.null - theta.alt)/ sd(y$DOC), lower.tail = FALSE)
+```
+
+# Question 6
+```{r}
+library(dplyr)
+data <- read.csv("ORCHARD.csv")
+fog <- data %>% filter(CONDITION == "FOG")
+cl <- data %>% filter(CONDITION == "CLEAR" | CONDITION == "CLOUDY")
+t.test(fog$RATIO, cl$RATIO, var.equal = TRUE)
+```
+
+# Question 7
+## Part a
+```{r}
+data <- read.csv("GASTURBINE.csv")
+trad <- data %>% filter(ENGINE == "Traditional")
+aero <- data %>% filter(ENGINE == "Aeroderiv")
+t.test(trad$HEATRATE, aero$HEATRATE, var.equal = TRUE)
+```
+
+## Part b
+```{r}
+adv <- data %>% filter(ENGINE == "Advanced")
+t.test(adv$HEATRATE, aero$HEATRATE, var.equal = TRUE)
+```
+
+# Question 8
+## Part a
+\[
+H_0: \mu_1 = \mu_2, H_a: \mu_1 \neq \mu_2
+\]
+
+## Part b
+```{r}
+data <- read.csv("GOBIANTS.csv")
+gobi <- data %>% filter(Region == "Gobi Desert")
+dry <- data %>% filter(Region == "Dry Steppe")
+t.test(gobi$AntSpecies, dry$AntSpecies)
+```
+
+## Part c
+\[
+<-30.0478, >25.7145
+\]
+
+## Part d
+\[
+0.8622
+\]
+
+## Part e
+
+There is not enough evidence to reject the notion that the two sites have differing means
+
+## Part f
+
+Independent, Normal distribution, Random
+
+# Question 9
+```{r}
+data <- read.csv("THRUPUT.csv")
+t.test(data$HUMAN, data$AUTO)
+```
+
+# Question 10
+```{r}
+set.seed(35); sam <- round(rnorm(30, 20, 3), 3)
+myboot<-function(iter=10000,x,fun="mean",alpha=0.05,...){  #Notice where the ... is repeated in the code
+n=length(x)   #sample size
+
+y=sample(x,n*iter,replace=TRUE)
+rs.mat=matrix(y,nr=n,nc=iter,byrow=TRUE)
+xstat=apply(rs.mat,2,fun) # xstat is a vector and will have iter values in it 
+ci=quantile(xstat,c(alpha/2,1-alpha/2))# Nice way to form a confidence interval
+# A histogram follows
+# The object para will contain the parameters used to make the histogram
+para=hist(xstat,freq=FALSE,las=1,
+main=paste("Histogram of Bootstrap sample statistics","\n","alpha=",alpha," iter=",iter,sep=""),
+...)
+
+#mat will be a matrix that contains the data, this is done so that I can use apply()
+mat=matrix(x,nr=length(x),nc=1,byrow=TRUE)
+
+#pte is the point estimate
+#This uses whatever fun is
+pte=apply(mat,2,fun)
+abline(v=pte,lwd=3,col="Black")# Vertical line
+segments(ci[1],0,ci[2],0,lwd=4)      #Make the segment for the ci
+text(ci[1],0,paste("(",round(ci[1],2),sep=""),col="Red",cex=3)
+text(ci[2],0,paste(round(ci[2],2),")",sep=""),col="Red",cex=3)
+
+# plot the point estimate 1/2 way up the density
+text(pte,max(para$density)/2,round(pte,2),cex=3)
+
+return(list(ci=ci,fun=fun,x=x))# Some output to use if necessary
+}
+
+myboot(x = sam)
