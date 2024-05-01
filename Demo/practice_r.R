@@ -148,9 +148,3 @@ data %>% mutate(difference = REAC.R-REAC.U) -> data2
 t.test(data2$difference)$conf
 
 t.test(data$REAC.R,data$REAC.U, paired =TRUE)$conf
-
-y = c(3, 6, 12, 15, 18, 21, 24, 27, 30, 33, 34, 36, 39, 40, 43)
-mean(y)
-
-y = c(4, 6, 10, 14, 16, 20, 24, 28, 31, 35, 36, 40, 42, 46)
-mean(y)
