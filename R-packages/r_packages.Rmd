@@ -1,0 +1,35 @@
+---
+title: "R Packages"
+author: "Lucas Ho"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+# Functions
+## mycltb
+```{r}
+MATH4753LHO24::mycltb(n = 200, iter = 10000, p = 0.5)
+```
+
+## myboot2
+```{r}
+MATH4753LHO24::myboot2(iter = 10000, x = rnorm(30, mean = 25, sd = 10), fun = "mean", alpha = 0.05, cx = 1.5)
+```
+
+## mymaxlik
+```{r}
+MATH4753LHO24::mymaxlik(lfun = function(x, param) log(dbinom(x, prob = param, size = 10)), x = c(3, 3, 4, 3, 4, 5, 5, 4), param = seq(0,1, length=1000, main="Binomial, n = 20"))
+```
+
+## ntickets
+```{r}
+MATH4753LHO24::ntickets(N = 400, gamma = 0.02, p = 0.05)
+```
+
+# Data
+```{r}
+print(MATH4753LHO24::fire)
+```
